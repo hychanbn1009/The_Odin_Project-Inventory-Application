@@ -6,9 +6,9 @@ var ItemSchema = new Schema(
   {
     name: {type: String, required: true},
     description: {type: String, required: true},
-    category: {type: Schema.Types.ObjectId, ref: 'Categories', required: true},
+    category: {type: Schema.Types.ObjectId, ref: 'Category', required: true},
     price: {type: Number, required: true },
-    SOH: {type:Number,required:true, validate : {
+    stockOnHand: {type:Number,required:true, validate : {
         validator : Number.isInteger,
         message   : '{VALUE} is not an integer value'
     }}
