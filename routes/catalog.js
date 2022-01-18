@@ -7,6 +7,6 @@ var category_controller = require('../controllers/categoryController');
 var item_controller = require('../controllers/itemController');
 
 // GET catalog home page.
-router.get('/',item_controller.index);
+router.get('/',category_controller.category_list);
 
 module.exports = router;
