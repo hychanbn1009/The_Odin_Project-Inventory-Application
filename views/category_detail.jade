@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= title
+  div(class='container-fluid')
+      div(class='card-group')
+        each character in list_character
+          div(class='card text-center')
+            img(class="card-img-top" src='#{character.img_url}')
+            div(class='card-body')
+              a(class="card-title" href=character.url) #{character.name}
+        else 
+            p No character Now

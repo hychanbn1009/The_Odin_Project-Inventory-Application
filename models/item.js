@@ -11,7 +11,8 @@ var ItemSchema = new Schema(
     stockOnHand: {type:Number,required:true, validate : {
         validator : Number.isInteger,
         message   : '{VALUE} is not an integer value'
-    }}
+    }},
+    img_url:{type:String,require:true},
   }
 );
 

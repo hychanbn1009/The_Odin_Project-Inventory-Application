@@ -2,14 +2,10 @@ extends layout
 
 block content
   h1= title
-
-  ul
-    each category in list_categories
-      li
-        a(href=category.url) #{category.name}
-        img(src='#{category.img_url}')
-        p #{category.description}
-        
-
-    else
-      li There are no authors.
+  div(class='container-fluid')
+      div(class='card-group')
+        each category in list_categories
+          div(class='card text-center')
+            img(class="card-img-top img-fluid" src='#{category.img_url}')
+            div(class='card-body')
+              a(class="card-title" href=category.url) #{category.name}
