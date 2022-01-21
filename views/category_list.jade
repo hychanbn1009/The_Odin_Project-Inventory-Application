@@ -2,10 +2,12 @@ extends layout
 
 block content
   h1= title
-  div(class='container-fluid')
-      div(class='card-group')
-        each category in list_categories
+  div(class='container')
+    div(class='row')
+      each category in list_categories
+        div(class='col-sm-4')
           div(class='card text-center')
-            img(class="card-img-top img-fluid" src='#{category.img_url}')
+            a(class="card-title" href=category.url)
+              img(class="card-img-top img-fluid" src='#{category.img_url}')
             div(class='card-body')
               a(class="card-title" href=category.url) #{category.name}

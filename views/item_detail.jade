@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  div(class='container')
+      div(class='row')
+        div(class='card mb-3')
+            div(class='row g-0')
+                div(class='col-md-4')
+                    img(src='#{item.img_url}' class="img-fluid rounded-start") 
+                div(class='col-md-8')
+                    div(class='card-body')
+                        h5(class='card-title') Name: #{item.name}
+                        p(class='card-text') Description: #{item.description}
+                        p(class='card-text') Price: #{item.price}
+                        p(class='card-text') Stock On Hand: #{item.stockOnHand}

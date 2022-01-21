@@ -14,10 +14,17 @@ exports.category_list = function(req,res,next){
 
 exports.category_detail=function(req,res,next){
     console.log(req.params.id)
-    Item.find({'category':req.params.id})
-    .exec(function(err,list_character){
+    async.parallel({
+        list_character:function(callback){
+            Item.find({'category':req.params.id})
+            .exec(callback)
+        },
+        category_detail:function(callback){
+            Category.findById(req.params.id)
+            .exec(callback)
+        },
+    },function(err,results){
         if (err){return next(err);}
-        res.render('category_detail',{title:'Character List',list_character:list_character})
-    })
-}
-
+        res.render('category_detail',{title:'Character List',list_character:results.list_character,category_detail:results.category_detail})
+    }
+)}
