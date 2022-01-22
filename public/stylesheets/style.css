@@ -30,3 +30,7 @@ a {
   color:black;
   text-decoration: none;
 }
+
+.category-display.card{
+  margin-top: 10rem;
+}

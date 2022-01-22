@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1=title
+    div(class='container')
+        div(class='row')
+            form(method='POST' action='')
+                div.form-group
+                    label(for='name') Category Name: 
+                    input#name.form-control(type='text' placeholder='Category Name' name='name' required='true' )
+                div.form-group
+                    label(for='description') Description: 
+                    textarea#description.form-control(type='text' placeholder='Description' name='description' required='true' )
+                div.form-group
+                    label(for='img_url') Image url: 
+                    input#img_url.form-control(type='text' placeholder='Image url' name='img_url' required='true' )
+                button.btn.btn-primary(type='submit') Submit
+            
+            if errors
+                ul
+                    for error in errors
+                        li!= error.msg
