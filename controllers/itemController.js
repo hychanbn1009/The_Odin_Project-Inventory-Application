@@ -15,5 +15,29 @@ exports.item_detail=function(req,res,next){
 }
 
 exports.item_create_get=function(req,res){
-    res.render('item_form', { title: 'Item Category'});
+    Category.find({},'name')
+    .exec(function(err,list_categories){
+        if(err){return next(err)}
+        res.render('item_form', { title: 'Item Category',list_categories:list_categories});
+    })
 }
+
+exports.item_create_post = function(req,res,next){
+    res.send('create post')
+}
+
+exports.item_delete_get = function(req,res,next){
+    res.send('delete get')
+};
+
+exports.item_delete_post = function(req,res,next){
+    res.send('delete post')
+};
+
+exports.item_update_get = function(req,res,next){
+    res.send('update get')
+};
+
+exports.item_update_post = function(req,res,next){
+    res.send('update post')
+};

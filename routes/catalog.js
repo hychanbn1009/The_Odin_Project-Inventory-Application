@@ -11,7 +11,32 @@ router.get('/',category_controller.category_list);
 // GET Item & Category creation page
 router.get('/item/create',item_controller.item_create_get);
 
-router.get('/category/create',category_controller.category_create_get)
+router.get('/category/create',category_controller.category_create_get);
+
+// POST Item & Category creation page
+router.post('/item/create',item_controller.item_create_post);
+
+router.post('/category/create',category_controller.category_create_post);
+
+// GET Item & Category deletion page
+router.get('/item/delete',item_controller.item_delete_get);
+
+router.get('/category/delete',category_controller.category_delete_get);
+
+// POST Item & Category deletion page
+router.get('/item/delete',item_controller.item_delete_post);
+
+router.get('/category/delete',category_controller.category_delete_post);
+
+// GET Item & Category udpate page
+router.get('/item/update',item_controller.item_update_get);
+
+router.get('/category/update',category_controller.category_update_get);
+
+// POST Item & Category udpate page
+router.post('/item/update',item_controller.item_update_post);
+
+router.post('/category/update',category_controller.category_update_post);
 
 // GET Category detail
 router.get('/category/:id',category_controller.category_detail);

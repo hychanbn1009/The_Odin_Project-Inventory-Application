@@ -1,6 +1,7 @@
 const Category = require('../models/category');
 const async = require('async');
 const Item = require('../models/item')
+const { body,validationResult } = require("express-validator");
 
 exports.category_list = function(req,res,next){
     Category.find()
@@ -30,4 +31,57 @@ exports.category_detail=function(req,res,next){
 
 exports.category_create_get = function(req,res,next){
     res.render('category_form', { title: 'Create Category'});
+};
+
+exports.category_create_post = [
+
+    body('name','Category name must be specified.').trim().isLength({ min: 1 }).replace(new RegExp("&"+"#"+"x27;", "g"), "'")
+    ,
+    body('description','description must be specified.').trim().isLength({ min: 1 }).replace(new RegExp("&"+"#"+"x27;", "g"), "'")
+    ,
+    body('img_url','img_url must be specified').trim().isURL().isLength({ min: 1 }),
+    (req,res,next)=>{
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+        console.log(req.body.name)
+        const category = new Category({
+            name:req.body.name,
+            description:req.body.description,
+            img_url:req.body.img_url,
+        })
+        if (!errors.isEmpty()) {
+            // There are errors. Render form again with sanitized values and error messages.
+            Category.find({},'name')
+                .exec(function (err, books) {
+                    if (err) { return next(err); }
+                    // Successful, so render.
+                    res.render('category_form', { title: 'Create Category', category:category,errors: errors.array() });
+            });
+            return;
+        }
+        else {
+            // Data from form is valid.
+            category.save(function (err) {
+                if (err) { return next(err); }
+                   // Successful - redirect to new record.
+                   res.redirect(category.url);
+                });
+        }
+    }
+]
+
+exports.category_delete_get = function(req,res,next){
+    res.send('delete get')
+};
+
+exports.category_delete_post = function(req,res,next){
+    res.send('delete post')
+};
+
+exports.category_update_get = function(req,res,next){
+    res.send('update get')
+};
+
+exports.category_update_post = function(req,res,next){
+    res.send('update post')
 };

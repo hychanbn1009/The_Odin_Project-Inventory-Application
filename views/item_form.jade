@@ -14,7 +14,8 @@ block content
                 div.form-group
                     label(for='category') Category: 
                     select#category.form-control(type='select', placeholder='Select Category' name='category' required='true')
-                        option 1
+                        for category in list_categories
+                            option(value=category.name) #{category.name}
                 div.form-group
                     label(for='price') Price: 
                     input#price.form-control(type='number' step="0.01" placeholder='Price' name='price' required='true')

@@ -7,13 +7,13 @@ block content
             form(method='POST' action='')
                 div.form-group
                     label(for='name') Category Name: 
-                    input#name.form-control(type='text' placeholder='Category Name' name='name' required='true' )
+                    input#name.form-control(type='text' placeholder='Category Name' name='name' required='true' value=(undefined===category ? '' : category.name))
                 div.form-group
                     label(for='description') Description: 
-                    textarea#description.form-control(type='text' placeholder='Description' name='description' required='true' )
+                    textarea#description.form-control(type='text' placeholder='Description' name='description' required='true' value=(undefined===category ? '' : category.description))
                 div.form-group
                     label(for='img_url') Image url: 
-                    input#img_url.form-control(type='text' placeholder='Image url' name='img_url' required='true' )
+                    input#img_url.form-control(type='url' placeholder='Image url' name='img_url' required='true'  value=(undefined===category ? '' : category.img_url))
                 button.btn.btn-primary(type='submit') Submit
             
             if errors
