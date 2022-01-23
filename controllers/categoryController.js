@@ -51,21 +51,21 @@ exports.category_create_post = [
         })
         if (!errors.isEmpty()) {
             // There are errors. Render form again with sanitized values and error messages.
-            Category.find({},'name')
-                .exec(function (err, books) {
+            Category.findOne({'name':req.body.name})
+                .exec(function (err, found_category) {
                     if (err) { return next(err); }
                     // Successful, so render.
-                    res.render('category_form', { title: 'Create Category', category:category,errors: errors.array() });
+                    if (found_category){
+                        res.redirect(found_category.url)
+                    }
+                    else{
+                        category.save(function (err) {
+                            if (err) { return next(err); }
+                               // Successful - redirect to new record.
+                               res.redirect(category.url);
+                            });
+                    }
             });
-            return;
-        }
-        else {
-            // Data from form is valid.
-            category.save(function (err) {
-                if (err) { return next(err); }
-                   // Successful - redirect to new record.
-                   res.redirect(category.url);
-                });
         }
     }
 ]

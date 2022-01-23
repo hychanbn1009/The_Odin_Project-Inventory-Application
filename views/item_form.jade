@@ -15,12 +15,12 @@ block content
                     label(for='category') Category: 
                     select#category.form-control(type='select', placeholder='Select Category' name='category' required='true')
                         for category in list_categories
-                            option(value=category.name) #{category.name}
+                            option(value=category._id) #{category.name}
                 div.form-group
                     label(for='price') Price: 
                     input#price.form-control(type='number' step="0.01" placeholder='Price' name='price' required='true')
                 div.form-group
-                    label(for='price') Stock On Hand: 
+                    label(for='stockOnHand') Stock On Hand: 
                     input#price.form-control(type='number' placeholder='Stock On Hand' name='stockOnHand' required='true')
                 div.form-group
                     label(for='img_url') Image url: 
