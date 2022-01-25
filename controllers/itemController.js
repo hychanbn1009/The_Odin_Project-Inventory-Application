@@ -49,22 +49,6 @@ exports.item_create_post = [
                     res.render('item_form',{title:'Create Item',list_categories:list_categories,errors: errors.array()})
                 })
                 return
-            // // There are errors. Render form again with sanitized values and error messages.
-            // Item.findOne({'name':req.body.name})
-            //     .exec(function (err, found_item) {
-            //         if (err) { return next(err); }
-            //         // Successful, so render.
-            //         if (found_item){
-            //             res.redirect(found_item.url)
-            //         }
-            //         else{
-            //             item.save(function (err) {
-            //                 if (err) { return next(err); }
-            //                    // Successful - redirect to new record.
-            //                    res.redirect(item.url);
-            //                 });
-            //         }
-            // });
         }
         else{
             item.save(function (err) {

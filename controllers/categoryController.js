@@ -2,6 +2,7 @@ const Category = require('../models/category');
 const async = require('async');
 const Item = require('../models/item')
 const { body,validationResult } = require("express-validator");
+const e = require('express');
 
 exports.category_list = function(req,res,next){
     Category.find()
@@ -70,12 +71,53 @@ exports.category_create_post = [
     }
 ]
 
+// Handle Author delete on POST.
 exports.category_delete_get = function(req,res,next){
-    res.send('delete get')
+    async.parallel({
+        category:function(callback){
+            //validate that an id has been provided
+            Category.findById(req.params.id).exec(callback)
+        },
+        category_items:function(callback){
+            Item.find({'category':req.params.id}).exec(callback)
+        },
+    },function(err,results){
+        if(err){return next(err)}
+        if(results.category_items===null){
+            //If no results, return to category
+            res.redirect('/catalog/category');
+        }
+        // If Success, render the delete page
+        res.render('category_delete',{title:'Delete Category',category:results.category,category_items:results.category_items})
+    }
+    )
 };
 
 exports.category_delete_post = function(req,res,next){
-    res.send('delete post')
+    async.parallel({
+        category:function(callback){
+            //validate that an id has been provided
+            Category.findById(req.body.id).exec(callback)
+        },
+        category_items:function(callback){
+            Item.find({'category':req.body.id}).exec(callback)
+        },
+    },function(err,results){
+        if(err){return next(err)}
+        if(results.category_items.length >0){
+            // Category has Items. Render in same way as for GET route.
+            res.render('category_delete',{title:'Delete Category',category:results.category,category_items:results.category_items})
+            return
+        }
+        else{
+            // Category has no Items. Delete object and redirect to the list of authors.
+            Category.findByIdAndRemove(req.body.category_id,function deleteCategory(err){
+                if (err){return next (err)}
+                // Success - go to author list
+                res.redirect('/')
+            })
+        }
+    })
 };
 
 exports.category_update_get = function(req,res,next){

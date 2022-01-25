@@ -21,12 +21,12 @@ router.post('/category/create',category_controller.category_create_post);
 // GET Item & Category deletion page
 router.get('/item/delete',item_controller.item_delete_get);
 
-router.get('/category/delete',category_controller.category_delete_get);
+router.get('/category/:id/delete',category_controller.category_delete_get);
 
 // POST Item & Category deletion page
-router.get('/item/delete',item_controller.item_delete_post);
+router.post('/item/:id/delete',item_controller.item_delete_post);
 
-router.get('/category/delete',category_controller.category_delete_post);
+router.post('/category/:id/delete',category_controller.category_delete_post);
 
 // GET Item & Category udpate page
 router.get('/item/update',item_controller.item_update_get);
