@@ -2,6 +2,7 @@ const Category = require('../models/category');
 const async = require('async');
 const Item = require('../models/item')
 const { body,validationResult } = require("express-validator");
+const item = require('../models/item');
 
 exports.index=function(req,res){
     res.send('Index')
@@ -61,11 +62,35 @@ exports.item_create_post = [
 ]
 
 exports.item_delete_get = function(req,res,next){
-    res.send('delete get')
+    async.parallel({
+        item:function(callback){
+            Item.findById(req.params.id).exec(callback)
+        },
+    },function(err,results){
+        if(err){return next(err)}
+        if(results.item===null){
+            res.redirect('/catelog/category');
+        }
+        res.render('item_delete',{title:'Delete Item',item:results.item})
+    }
+    )
 };
 
 exports.item_delete_post = function(req,res,next){
-    res.send('delete post')
+    async.parallel({
+        item:function(callback){
+            Item.findById(req.body.id).exec(callback)
+        },
+    },function(err,results){
+        if(err){return next(err)}
+        else{
+            Item.findByIdAndRemove(req.body.item_id,function deleteItem(err){
+                if(err){return next(err)}
+                res.redirect('/')
+            })
+        }
+    }
+    )
 };
 
 exports.item_update_get = function(req,res,next){

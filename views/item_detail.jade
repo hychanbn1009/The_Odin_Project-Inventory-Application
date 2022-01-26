@@ -14,3 +14,6 @@ block content
                         p(class='card-text') Description: #{item.description}
                         p(class='card-text') Price: #{item.price}
                         p(class='card-text') Stock On Hand: #{item.stockOnHand}
+                        div(class='btn-group' role="group" aria-label="modify item")
+                            a(class="btn btn-primary" href=item.url+"/update") Edit
+                            a(class="btn btn-primary" href=item.url+"/delete") Delete
