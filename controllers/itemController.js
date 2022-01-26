@@ -84,6 +84,7 @@ exports.item_delete_post = function(req,res,next){
     },function(err,results){
         if(err){return next(err)}
         else{
+            // Delete the item object and redirect to home page
             Item.findByIdAndRemove(req.body.item_id,function deleteItem(err){
                 if(err){return next(err)}
                 res.redirect('/')
@@ -94,7 +95,21 @@ exports.item_delete_post = function(req,res,next){
 };
 
 exports.item_update_get = function(req,res,next){
-    res.send('update get')
+    async.parallel({
+        item:function(callback){
+            Item.findById(req.params.id).exec(callback)
+        },
+        list_categories:function(callback){
+            Category.find(callback)
+        }
+    },function(err,results){
+        if(err){return next(err)}
+        if(results.item===null){
+            res.redirect('/catelog/category');
+        }
+        res.render('item_form',{title:'Update Item',item:results.item,list_categories:results.list_categories})
+    }
+    )
 };
 
 exports.item_update_post = function(req,res,next){

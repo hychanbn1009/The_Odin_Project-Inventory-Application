@@ -36,21 +36,23 @@ exports.category_create_get = function(req,res,next){
 
 exports.category_create_post = [
 
-    body('name','Category name must be specified.').trim().isLength({ min: 1 }).replace(new RegExp("&"+"#"+"x27;", "g"), "'")
-    ,
-    body('description','description must be specified.').trim().isLength({ min: 1 }).replace(new RegExp("&"+"#"+"x27;", "g"), "'")
-    ,
+    body('name','Category name must be specified.').trim().isLength({ min: 1 }).replace(new RegExp("&"+"#"+"x27;", "g"), "'"),
+    body('description','description must be specified.').trim().isLength({ min: 1 }).replace(new RegExp("&"+"#"+"x27;", "g"), "'"),
     body('img_url','img_url must be specified').trim().isURL().isLength({ min: 1 }),
     (req,res,next)=>{
         // Extract the validation errors from a request.
-        const errors = validationResult(req);
+        var errors = validationResult(req);
         console.log(req.body.name)
-        const category = new Category({
+        var category = new Category({
             name:req.body.name,
             description:req.body.description,
             img_url:req.body.img_url,
         })
         if (!errors.isEmpty()) {
+            res.render('category_form', { title: 'Create Category', category: category, errors: errors.array()});
+            return;
+        }
+        else{
             // There are errors. Render form again with sanitized values and error messages.
             Category.findOne({'name':req.body.name})
                 .exec(function (err, found_category) {
